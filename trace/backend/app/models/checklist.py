@@ -39,7 +39,7 @@ class ChecklistItem(Base):
     item_label = Column(String(500), nullable=False)
     category = Column(String(100), nullable=True)
     is_mandatory = Column(Boolean, default=True)
-    status = Column(SAEnum(ChecklistItemStatus), default=ChecklistItemStatus.PENDING)
+    status = Column(SAEnum(ChecklistItemStatus, values_callable=lambda obj: [e.value for e in obj]), default=ChecklistItemStatus.PENDING)
     evidence_reference = Column(String(500), nullable=True)
     notes = Column(Text, nullable=True)
     verified_by_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)

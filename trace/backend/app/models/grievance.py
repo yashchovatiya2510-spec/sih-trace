@@ -29,11 +29,11 @@ class Grievance(Base):
     ngo_id = Column(Integer, ForeignKey("ngos.id"), nullable=False, index=True)
     beneficiary_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)  # NULL = anonymous
     is_anonymous = Column(Boolean, default=True)
-    category = Column(SAEnum(GrievanceCategory), nullable=False)
+    category = Column(SAEnum(GrievanceCategory, values_callable=lambda obj: [e.value for e in obj]), nullable=False)
     title = Column(String(255), nullable=False)
     description = Column(Text, nullable=False)
     language = Column(String(10), default="en")  # en | hi
-    status = Column(SAEnum(GrievanceStatus), default=GrievanceStatus.SUBMITTED, index=True)
+    status = Column(SAEnum(GrievanceStatus, values_callable=lambda obj: [e.value for e in obj]), default=GrievanceStatus.SUBMITTED, index=True)
     tracking_code = Column(String(20), unique=True, nullable=False)  # Public tracking code
     response = Column(Text, nullable=True)
     resolved_at = Column(DateTime(timezone=True), nullable=True)

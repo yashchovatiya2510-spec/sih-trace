@@ -41,9 +41,9 @@ class Alert(Base):
     claim_id = Column(Integer, ForeignKey("claims.id"), nullable=True, index=True)
     inspection_id = Column(Integer, ForeignKey("inspections.id"), nullable=True)
     evidence_id = Column(Integer, ForeignKey("evidence.id"), nullable=True)
-    alert_type = Column(SAEnum(AlertType), nullable=False, index=True)
-    severity = Column(SAEnum(AlertSeverity), nullable=False, index=True)
-    status = Column(SAEnum(AlertStatus), default=AlertStatus.OPEN, index=True)
+    alert_type = Column(SAEnum(AlertType, values_callable=lambda obj: [e.value for e in obj]), nullable=False, index=True)
+    severity = Column(SAEnum(AlertSeverity, values_callable=lambda obj: [e.value for e in obj]), nullable=False, index=True)
+    status = Column(SAEnum(AlertStatus, values_callable=lambda obj: [e.value for e in obj]), default=AlertStatus.OPEN, index=True)
     title = Column(String(255), nullable=False)
     description = Column(Text, nullable=True)
     details = Column(JSON, nullable=True)  # Additional structured data

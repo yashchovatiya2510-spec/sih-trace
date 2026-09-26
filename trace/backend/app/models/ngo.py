@@ -31,7 +31,7 @@ class NGO(Base):
     contact_person = Column(String(255), nullable=True)
     contact_email = Column(String(255), nullable=True)
     contact_phone = Column(String(20), nullable=True)
-    status = Column(SAEnum(NGOStatus), default=NGOStatus.PENDING, nullable=False, index=True)
+    status = Column(SAEnum(NGOStatus, values_callable=lambda obj: [e.value for e in obj]), default=NGOStatus.PENDING, nullable=False, index=True)
     compliance_score = Column(Float, default=100.0)
     cctv_feed_url = Column(String(500), nullable=True)  # Real RTSP or mock URL
     has_cctv = Column(Boolean, default=False)

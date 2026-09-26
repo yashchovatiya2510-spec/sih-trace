@@ -25,7 +25,7 @@ class Invoice(Base):
     total_amount = Column(Float, nullable=True)
     file_path = Column(String(500), nullable=False)
     original_filename = Column(String(255), nullable=True)
-    status = Column(SAEnum(InvoiceStatus), default=InvoiceStatus.UPLOADED, index=True)
+    status = Column(SAEnum(InvoiceStatus, values_callable=lambda obj: [e.value for e in obj]), default=InvoiceStatus.UPLOADED, index=True)
 
     # OCR extracted data
     ocr_raw_text = Column(Text, nullable=True)

@@ -28,7 +28,7 @@ class Claim(Base):
     amount_approved = Column(Float, nullable=True)
     beneficiary_count_claimed = Column(Integer, nullable=False)
     beneficiary_count_verified = Column(Integer, nullable=True)
-    status = Column(SAEnum(ClaimStatus), default=ClaimStatus.DRAFT, nullable=False, index=True)
+    status = Column(SAEnum(ClaimStatus, values_callable=lambda obj: [e.value for e in obj]), default=ClaimStatus.DRAFT, nullable=False, index=True)
     description = Column(Text, nullable=True)
     rejection_reason = Column(Text, nullable=True)
     submitted_by_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)

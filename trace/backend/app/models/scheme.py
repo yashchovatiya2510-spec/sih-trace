@@ -23,7 +23,7 @@ class Scheme(Base):
     name = Column(String(255), nullable=False, unique=True)
     code = Column(String(50), nullable=False, unique=True, index=True)
     description = Column(Text, nullable=True)
-    category = Column(SAEnum(SchemeCategory), nullable=False)
+    category = Column(SAEnum(SchemeCategory, values_callable=lambda obj: [e.value for e in obj]), nullable=False)
     ministry = Column(String(255), default="Ministry of Social Justice & Empowerment")
     annual_budget_crore = Column(Integer, nullable=True)
     is_active = Column(Boolean, default=True)

@@ -25,7 +25,7 @@ class Beneficiary(Base):
     address = Column(Text, nullable=True)
     phone = Column(String(20), nullable=True)
     face_encoding_path = Column(String(500), nullable=True)  # Path to stored face encoding
-    status = Column(SAEnum(BeneficiaryStatus), default=BeneficiaryStatus.ACTIVE, index=True)
+    status = Column(SAEnum(BeneficiaryStatus, values_callable=lambda obj: [e.value for e in obj]), default=BeneficiaryStatus.ACTIVE, index=True)
     is_verified = Column(Boolean, default=False)
     enrolled_date = Column(DateTime(timezone=True), nullable=True)
     last_attendance_date = Column(DateTime(timezone=True), nullable=True)

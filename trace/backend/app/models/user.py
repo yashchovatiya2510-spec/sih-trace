@@ -21,7 +21,7 @@ class User(Base):
     email = Column(String(255), unique=True, nullable=False, index=True)
     phone = Column(String(20), nullable=True)
     hashed_password = Column(String(255), nullable=False)
-    role = Column(SAEnum(UserRole), nullable=False)
+    role = Column(SAEnum(UserRole, values_callable=lambda obj: [e.value for e in obj]), nullable=False)
     is_active = Column(Boolean, default=True, nullable=False)
     is_verified = Column(Boolean, default=False, nullable=False)
     ngo_id = Column(Integer, nullable=True)  # FK set at app level to avoid circular
