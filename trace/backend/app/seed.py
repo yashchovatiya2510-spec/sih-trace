@@ -75,6 +75,14 @@ SCHEME_CHECKLISTS = {
 async def seed(db: AsyncSession):
     print("🌱 Seeding database...")
 
+    # ─── IDEMPOTENCY GUARD ──────────────────────────────────────────────────
+    result = await db.execute(text("SELECT COUNT(*) FROM schemes"))
+    existing_count = result.scalar()
+    if existing_count and existing_count > 0:
+        print(f"✅ Database already seeded ({existing_count} schemes found) — skipping seed.")
+        return
+
+  
     # ─── SCHEMES ─────────────────────────────────────────────────────────────
     schemes_data = [
         {"name": "SHRESTA", "code": "SHRESTA", "description": "Scheme for Residential Education for Students in High schools in Targeted Areas — skill training for SC youth", "category": SchemeCategory.SCHEDULED_CASTE, "annual_budget_crore": 500},
